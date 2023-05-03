@@ -1,26 +1,8 @@
 <?php
+require_once "./Database.php";
 
-require_once "./MysqlConnection.php";
-
-$config = [
-    "host" => "127.0.0.1",
-    "database" => "db_medical_records",
-    "user" => "root",
-    "password" => ""
-];
-
-$mysqlConnection = new MYSQLConnection(
-    $config['host'],
-    $config['database'],
-    $config['user'],
-    $config['password']
-);
-
-$connection = $mysqlConnection->getConnection();
-
-$query = $connection->query("SELECT * FROM persons");
-
-$patients = $query->fetchAll();
+$database = new Database();
+$persons = $database->selectAll();
 ?>
 
 <!DOCTYPE html>
@@ -56,20 +38,20 @@ $patients = $query->fetchAll();
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($patients as $patient) : ?>
+            <?php foreach ($persons as $person) : ?>
                 <tr>
-                    <td><?= $patient['id'] ?></td>
-                    <td><?= $patient['name'] ?></td>
-                    <td><?= $patient['age'] ?></td>
-                    <td><?= $patient['gender'] ?></td>
-                    <td><?= $patient['height'] ?></td>
-                    <td><?= $patient['weight'] ?></td>
-                    <td><?= $patient['waist'] ?></td>
-                    <td><?= $patient['bmi_score'] ?></td>
-                    <td><?= $patient['bmi_category'] ?></td>
-                    <td><?= $patient['rfm_score'] ?></td>
-                    <td><?= $patient['rfm_category'] ?></td>
-                    <td><a href="">Edit</a>| <a href="">Delete</a></td>
+                    <td><?= $person['id'] ?></td>
+                    <td><?= $person['name'] ?></td>
+                    <td><?= $person['age'] ?></td>
+                    <td><?= $person['gender'] ?></td>
+                    <td><?= $person['height'] ?></td>
+                    <td><?= $person['weight'] ?></td>
+                    <td><?= $person['waist'] ?></td>
+                    <td><?= $person['bmi_score'] ?></td>
+                    <td><?= $person['bmi_category'] ?></td>
+                    <td><?= $person['rfm_score'] ?></td>
+                    <td><?= $person['rfm_category'] ?></td>
+                    <td><a href="/intro-pdo/edit?id=<?= $person["id"] ?>">Edit</a>| <a href="/intro-pdo/confirm?id=<?= $person["id"] ?>">Delete</a></td>
                 </tr>
             <?php endforeach ?>
         </tbody>

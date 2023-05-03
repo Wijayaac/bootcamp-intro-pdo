@@ -3,6 +3,7 @@
 // TODO
 // Get the id here so we can use it
 
+$personId = $_GET["id"];
 ?>
 
 <!DOCTYPE html>
@@ -19,9 +20,9 @@
     <div>
         <h1>Delete confirmation</h1>
         <p>Are you sure to delete it ?</p>
-        <a href="/intro-pdo">Back</a>
-        <form action="/intro-pdo/delete.php">
-            <input type="hidden" name="id">
+        <form action="/intro-pdo/delete" method="POST">
+            <input type="hidden" name="id" value="<?= $personId ?>">
+            <a href="/intro-pdo">Back</a>
             <button>Yes</button>
         </form>
     </div>

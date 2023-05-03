@@ -1,7 +1,10 @@
 <?php
 // TODO
 // Flow -> form -> validation -> database -> mysqlconnection
-
+// Helpers
+require_once "./helpers/get_input.php";
+// Database
+require_once "./Database.php";
 // validation
 require_once "./Validation.php";
 
@@ -34,13 +37,27 @@ $waistRule = [
 ];
 
 // Check validation
+$validation->makeRule("name", $nameRule);
+$validation->makeRule("age", $ageRule);
+$validation->makeRule("gender", $genderRule);
+$validation->makeRule("height", $heightRule);
+$validation->makeRule("weight", $weightRule);
+$validation->makeRule("waist", $waistRule);
 
-$name = $validation->makeRule("name", $nameRule);
-$age = $validation->makeRule("age", $ageRule);
-$gender = $validation->makeRule("gender", $genderRule);
-$height = $validation->makeRule("height", $heightRule);
-$weight = $validation->makeRule("weight", $weightRule);
-$waist = $validation->makeRule("waist", $waistRule);
+
+if (!$validation->isFails()) {
+    $database = new Database();
+    $data = [
+        "name" => get_input("name"),
+        "age" => get_input("age"),
+        "gender" => get_input("gender"),
+        "height" => get_input("height"),
+        "weight" => get_input("weight"),
+        "waist" => get_input("waist"),
+    ];
+
+    $database->save($data);
+}
 
 ?>
 
@@ -55,7 +72,7 @@ $waist = $validation->makeRule("waist", $waistRule);
 </head>
 
 <body>
-    <?php if ($validation && count($validation->getErrors()) > 0) : ?>
+    <?php if ($validation && $validation->isFails()) : ?>
         <ul>
             <?php foreach ($validation->getErrors() as $error) : ?>
                 <li style="color: red;"><?= $error ?></li>
