@@ -62,6 +62,8 @@ $waist = $validation->makeRule("waist", $waistRule);
             <?php endforeach ?>
         </ul>
     <?php endif ?>
+
+    <a href="/intro-pdo">Go back to home</a>
 </body>
 
 </html>
