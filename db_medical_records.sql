@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 03, 2023 at 11:52 AM
--- Server version: 8.0.30
--- PHP Version: 8.1.10
+-- Generation Time: May 03, 2023 at 10:48 PM
+-- Server version: 5.7.33
+-- PHP Version: 8.0.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `patients` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `gender` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -51,17 +51,17 @@ INSERT INTO `patients` (`id`, `name`, `gender`, `created_at`) VALUES
 --
 
 CREATE TABLE `persons` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `age` smallint NOT NULL,
+  `age` smallint(6) NOT NULL,
   `gender` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `height` smallint NOT NULL,
-  `weight` smallint NOT NULL,
-  `waist` smallint NOT NULL,
-  `bmi_score` float NOT NULL,
-  `bmi_category` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rfm_score` float NOT NULL,
-  `rfm_category` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
+  `height` smallint(6) NOT NULL,
+  `weight` smallint(6) NOT NULL,
+  `waist` smallint(6) NOT NULL,
+  `bmi_score` float DEFAULT NULL,
+  `bmi_category` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rfm_score` float DEFAULT NULL,
+  `rfm_category` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -69,7 +69,14 @@ CREATE TABLE `persons` (
 --
 
 INSERT INTO `persons` (`id`, `name`, `age`, `gender`, `height`, `weight`, `waist`, `bmi_score`, `bmi_category`, `rfm_score`, `rfm_category`) VALUES
-(1, 'wijaya', 18, 'male', 167, 52, 59, 22, 'Normal', 5.59, 'Average');
+(1, 'wijaya', 18, 'male', 167, 52, 59, 22, 'Normal', 5.59, 'Average'),
+(2, 'dekac', 34, 'male', 156, 56, 78, 22, 'Normal', 5.59, 'Average'),
+(3, 'dekac2', 34, 'male', 178, 56, 59, NULL, NULL, NULL, NULL),
+(4, 'dekac4', 34, 'male', 167, 56, 59, NULL, NULL, NULL, NULL),
+(5, 'test', 24, 'male', 156, 54, 77, NULL, NULL, NULL, NULL),
+(6, 'testing', 24, 'male', 156, 54, 77, NULL, NULL, NULL, NULL),
+(7, 'nama', 22, 'female', 156, 56, 77, NULL, NULL, NULL, NULL),
+(8, 'Wijaya ac', 22, 'female', 156, 56, 47, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -95,13 +102,13 @@ ALTER TABLE `persons`
 -- AUTO_INCREMENT for table `patients`
 --
 ALTER TABLE `patients`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `persons`
 --
 ALTER TABLE `persons`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
