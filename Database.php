@@ -26,7 +26,6 @@ class Database
     public function selectAll($limit = 4, $page = 1)
     {
         $offset = ($page - 1) * $limit;
-        var_dump([$page, $limit]);
         $query = $this->connection->query("SELECT * FROM persons LIMIT {$limit} OFFSET {$offset}");
         $total = $this->connection->query("SELECT * FROM persons")->rowCount();
         $data = [
