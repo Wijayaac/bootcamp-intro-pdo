@@ -1,12 +1,15 @@
 <?php
 require_once "./Database.php";
+require_once "./Pagination.php";
 
 $database = new Database();
 
 $pageNumber = $_GET["page"] ?? 1;
-$limit = 2;
-$data = $database->selectAll(intval($limit), intval($pageNumber));
+$limit = 4;
+$total = $database->getTotal();
 
+$pagination = new Pagination($total, $limit, $pageNumber);
+$data = $database->selectAll($limit, $pagination->getOffset());
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +27,7 @@ $data = $database->selectAll(intval($limit), intval($pageNumber));
 
     <a href="/intro-pdo/create">Insert Data</a>
 
-    <p>Total Persons : <?= $data["total"] ?></p>
+    <p>Total Persons : <?= $total ?></p>
 
     <table border="1">
         <thead>
@@ -66,7 +69,7 @@ $data = $database->selectAll(intval($limit), intval($pageNumber));
 
         <p>Pagination</p>
         <ul style="display: flex; gap: 20px;list-style: none;margin: 0; padding:0;">
-            <?php for ($i = 1; $i <= ceil($data["total"] / $limit); $i++) : ?>
+            <?php for ($i = 1; $i <= ceil($total / $limit); $i++) : ?>
                 <li><a href="/intro-pdo?page=<?= $i ?>"><?= $i ?></a></li>
             <?php endfor ?>
         </ul>
