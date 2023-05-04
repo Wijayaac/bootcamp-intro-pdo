@@ -66,7 +66,7 @@ $data = $database->selectAll(intval($limit), intval($pageNumber));
 
         <p>Pagination</p>
         <ul style="display: flex; gap: 20px;list-style: none;margin: 0; padding:0;">
-            <?php for ($i = 1; $i <= $data["total"] / $limit; $i++) : ?>
+            <?php for ($i = 1; $i <= ceil($data["total"] / $limit); $i++) : ?>
                 <li><a href="/intro-pdo?page=<?= $i ?>"><?= $i ?></a></li>
             <?php endfor ?>
         </ul>
