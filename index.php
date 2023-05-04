@@ -2,7 +2,11 @@
 require_once "./Database.php";
 
 $database = new Database();
-$persons = $database->selectAll();
+
+$pageNumber = $_GET["page"] ?? 1;
+$limit = 2;
+$data = $database->selectAll(intval($limit), intval($pageNumber));
+
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +23,8 @@ $persons = $database->selectAll();
     <h1>Body Mass Index(BMI) and Relative Mass(RFM) Category Calculator</h1>
 
     <a href="/intro-pdo/create">Insert Data</a>
+
+    <p>Total Persons : <?= $data["total"] ?></p>
 
     <table border="1">
         <thead>
@@ -38,7 +44,7 @@ $persons = $database->selectAll();
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($persons as $person) : ?>
+            <?php foreach ($data["persons"] as $person) : ?>
                 <tr>
                     <td><?= $person['id'] ?></td>
                     <td><?= $person['name'] ?></td>
@@ -56,6 +62,15 @@ $persons = $database->selectAll();
             <?php endforeach ?>
         </tbody>
     </table>
+    <div>
+
+        <p>Pagination</p>
+        <ul style="display: flex; gap: 20px;list-style: none;margin: 0; padding:0;">
+            <?php for ($i = 1; $i <= $data["total"] / $limit; $i++) : ?>
+                <li><a href="/intro-pdo?page=<?= $i ?>"><?= $i ?></a></li>
+            <?php endfor ?>
+        </ul>
+    </div>
 </body>
 
 </html>

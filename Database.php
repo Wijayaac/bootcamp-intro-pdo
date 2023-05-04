@@ -23,10 +23,17 @@ class Database
 
         $this->connection = $mysqlConnection->getConnection();
     }
-    public function selectAll()
+    public function selectAll($limit = 4, $page = 1)
     {
-        $query = $this->connection->query("SELECT * FROM persons");
-        return $query->fetchAll();
+        $offset = ($page - 1) * $limit;
+        var_dump([$page, $limit]);
+        $query = $this->connection->query("SELECT * FROM persons LIMIT {$limit} OFFSET {$offset}");
+        $total = $this->connection->query("SELECT * FROM persons")->rowCount();
+        $data = [
+            "total" => $total,
+            "persons" => $query->fetchAll()
+        ];
+        return $data;
     }
     public function selectSpecified($id)
     {
